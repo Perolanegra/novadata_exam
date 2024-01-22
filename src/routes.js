@@ -1,25 +1,27 @@
-const express = require('express');
+const express = require("express");
 const routes = express.Router();
 
-const CategoriesCtrl = require('./controllers/CategoriesCtrl');
-const PostsCtrl = require('./controllers/PostsCtrl');
-const UsersCtrl = require('./controllers/UsersCtrl');
+const CategoriesCtrl = require("./controllers/CategoriesCtrl");
+const PostsCtrl = require("./controllers/PostsCtrl");
+const UsersCtrl = require("./controllers/UsersCtrl");
+
+const cacheMiddleware = require("./middlewares/CacheMiddleware");
+const cm = new cacheMiddleware();
 /** Endpoints **/
 
-/** Endpoints Pedido */
-routes.post('/categories/store', CategoriesCtrl.store);
-/** Fim Pedido */
+/** Endpoints categories */
+routes.post("/categories/store", cm.cacheVerify, CategoriesCtrl.store);
+/** Fim categories */
 
-/** Endpoints Estabelecimento */
-routes.get('/establishments', PostsCtrl.getAll);
-routes.post('/establishments/store', PostsCtrl.store);
-/** Fim Estabelecimento */
+/** Endpoints posts */
+routes.get("/posts", cm.cacheVerify, PostsCtrl.getAll);
+routes.post("/posts/store", cm.cacheVerify, PostsCtrl.store);
+/** Fim posts */
 
 /** Endpoints Usuário */
-routes.get('/user', UsersCtrl.getAll);
-routes.get('/user/authenticate', UsersCtrl.getById);
-routes.post('/user/register', UsersCtrl.store);
+routes.get("/user", cm.cacheVerify, UsersCtrl.getAll);
+routes.get("/user/authenticate", cm.cacheVerify, UsersCtrl.getById);
+routes.post("/user/register", cm.cacheVerify, UsersCtrl.store);
 /** Fim Usuário */
-
 
 module.exports = routes;

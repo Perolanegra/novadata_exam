@@ -14,7 +14,6 @@ module.exports = {
             if(userFind) {
                 return res.status(409).send({ err: { message: 'Email já cadastrado.' } });
             }
-           
             
             postData.birthDate = new Date(postData.birthDate);
             const user = await Users.create(postData);
