@@ -1,20 +1,20 @@
-# Use a imagem oficial do Node.js
+# Nodejs Image
 FROM node:18
 
-# Crie e defina o diretório de trabalho
+# workspace from docker
 WORKDIR /app
 
-# Copie os arquivos do projeto para o contêiner
+# Files to container
 COPY package*.json ./
 
 # Instale as dependências
 RUN npm ci
 
-# Copie o restante dos arquivos para o contêiner
+# Files to docker container after installation from lock.json
 COPY . .
 
 # Exponha a porta necessária para o aplicativo Node.js
 EXPOSE 3000
 
 # Comando para iniciar o aplicativo Node.js
-CMD ["npm", "start"]
+CMD ["npm", "dev"]
