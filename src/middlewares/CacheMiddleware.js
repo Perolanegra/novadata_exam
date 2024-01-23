@@ -2,11 +2,12 @@ class CacheMiddleware {
   cache = {};
 
   getFromCache(key) {
-    return cache[key];
+    return this.cache[key];
   }
 
   setInCache(key, data) {
-    cache[key] = data;
+    this.cache[key] = data;
+    this.minifyImage(this.cache[key]);
   }
 
   cacheVerify(req, res, next) {
@@ -61,6 +62,25 @@ class CacheMiddleware {
   invalidateCache(key) {
     // Função para invalidar uma entrada específica do cache. Deve ser chamada após alguma persistência de dados no banco, passsando a rota como key.
     delete cache[key];
+  }
+
+  minifyImage(res) {
+    // Check if the response data contains the image field
+    if (res.image) {
+      const imageBuffer = Buffer.from(res.image, "base64");
+
+      // Minify the image using sharp
+      sharp(imageBuffer)
+        .resize({ width: 300 }) // Adjust the width as needed
+        .toBuffer()
+        .then((minifiedImageBuffer) => {
+          // Update the response data with the minified image
+          res.image = minifiedImageBuffer.toString("base64");
+        })
+        .catch((err) => {
+          console.error("Error minifying image:", err);
+        });
+    }
   }
 }
 
