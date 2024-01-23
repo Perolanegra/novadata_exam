@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const Order = mongoose.model('Order');
-const Command = mongoose.model('Command');
-const Product = mongoose.model('Product');
+const Categories = mongoose.model('Categories');
+const Users = mongoose.model('Users');
+const Posts = mongoose.model('Posts');
 
 module.exports = {
 
