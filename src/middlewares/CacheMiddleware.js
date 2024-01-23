@@ -14,24 +14,25 @@ class CacheMiddleware {
     const key = req.originalUrl;
     const startTime = new Date();
 
-    const cachedData = getFromCache(key);
+    const cachedData = this.getFromCache(key);
 
-    if (cachedData && !isCacheExpired(cachedData)) {
+    if (cachedData && !this.isCacheExpired(cachedData)) {
       // Se os dados estiverem em cache e não expirarem, envie-os diretamente
       const endTime = new Date();
-      logCacheHit(key, startTime, endTime);
+      this.logCacheHit(key, startTime, endTime);
       res.send(cachedData.data);
     } else {
       // Se os dados não estiverem em cache ou expirarem, configure o novo comportamento do res.send
+      this.invalidateCache(key);
       res.sendResponse = res.send;
       res.send = (body) => {
         const dataToCache = {
           data: body,
           timestamp: new Date().getTime(),
         };
-        setInCache(key, dataToCache);
+        this.setInCache(key, dataToCache);
         const endTime = new Date();
-        logCacheMiss(key, startTime, endTime);
+        this.logCacheMiss(key, startTime, endTime);
         res.sendResponse(body);
       };
       next();
@@ -54,7 +55,7 @@ class CacheMiddleware {
   }
 
   logCacheMiss(key, startTime, endTime) {
-    // Função para registrar uma falha no cache
+    // Função para registrar que não está no cache
     const duration = endTime - startTime;
     console.log(`Cache miss for ${key}. Load time: ${duration}ms`);
   }
@@ -66,8 +67,8 @@ class CacheMiddleware {
 
   minifyImage(res) {
     // Check if the response data contains the image field
-    if (res.image) {
-      const imageBuffer = Buffer.from(res.image, "base64");
+    if (res.data.image) {
+      const imageBuffer = Buffer.from(res.data.image, "base64");
 
       // Minify the image using sharp
       sharp(imageBuffer)
@@ -75,7 +76,7 @@ class CacheMiddleware {
         .toBuffer()
         .then((minifiedImageBuffer) => {
           // Update the response data with the minified image
-          res.image = minifiedImageBuffer.toString("base64");
+          res.data.image = minifiedImageBuffer.toString("base64");
         })
         .catch((err) => {
           console.error("Error minifying image:", err);

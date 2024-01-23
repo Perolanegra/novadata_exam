@@ -1,30 +1,28 @@
 const mongoose = require('mongoose');
 
-const Establishment = mongoose.model('Establishment');
+const Posts = mongoose.model('Posts');
 
 module.exports = {
 
-    async store(req, res) { // requisição que insere o estabelecimento.
+    async store(req, res) { // requisição que insere o post.
         const postData = req.body;
-        let hasData;
-
         try {
             
-            await Establishment.find(postData, (e, resp) => {
-                if(e) {
-                    return res.status(400).send({ err: { message: 'Operação Indisponível no momento.', e } });
-                }
+            // await Posts.find(postData, (e, resp) => {
+            //     if(e) {
+            //         return res.status(400).send({ err: { message: 'Operação Indisponível no momento.', e } });
+            //     }
                 
-                hasData = resp.length ? true : false;
-            });
+            //     hasData = resp.length ? true : false;
+            // });
 
-            if(hasData) {
-                return res.status(409).send({ err: { message: 'Estabelecimento já cadastrado.' } });
-            }
+            // if(hasData) {
+            //     return res.status(409).send({ err: { message: 'Estabelecimento já cadastrado.' } });
+            // }
     
-            const establishment = await Establishment.create(postData);
+            const posts = await Posts.create(postData);
             
-            return res.send(establishment);
+            return res.send(posts);
             
         } catch (e) {
             return res.status(400).send({ err: { message: 'Operação Indisponível no momento.', e }  });
@@ -34,8 +32,8 @@ module.exports = {
     async getAll(req, res) {
         
         try {
-            const establishments = await Establishment.find();
-            return res.send(establishments);
+            const postsArr = await Posts.find();
+            return res.send(postsArr);
             
         } catch (e) {
             return res.status(400).send({ err: { message: 'Não foi possível retornar a lista de Estabelecimentos.', e }  });

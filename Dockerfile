@@ -1,5 +1,5 @@
 # Nodejs Image
-FROM node:18
+FROM node:16
 
 # workspace from docker
 WORKDIR /app
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Comando para iniciar o aplicativo Node.js
-CMD ["npm", "dev"]
+CMD ["npm", "run", "dev"]

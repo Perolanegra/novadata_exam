@@ -15,7 +15,7 @@ routes.post("/categories/store", cm.cacheVerify, CategoriesCtrl.store);
 
 /** Endpoints posts */
 routes.get("/posts", cm.cacheVerify, PostsCtrl.getAll);
-routes.post("/posts/store", cm.cacheVerify, PostsCtrl.store);
+routes.post("/posts", cm.cacheVerify, PostsCtrl.store);
 /** Fim posts */
 
 /** Endpoints Usuário */

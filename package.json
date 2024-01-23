@@ -6,7 +6,7 @@
   "scripts": {
     "test": "",
     "dev": "nodemon src/index.js",
-    "start": "docker-compose up"
+    "start": "docker-compose up --build"
   },
   "keywords": [],
   "author": "",
