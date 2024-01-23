@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon --watch src --ext js src/index.js",
     "start": "docker-compose up --build"
   },
   "keywords": [],

@@ -26,5 +26,5 @@ module.exports = {
         err: { message: "Não foi possível retornar as Postagens.", e },
       });
     }
-  },
+  }
 };
