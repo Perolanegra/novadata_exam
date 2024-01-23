@@ -7,7 +7,6 @@ const requireDir = require("require-dir");
 const app = express();
 
 const assignEnvVarsToNode = require('./utils');
-
 assignEnvVarsToNode();
 
 // caso tenha usuario e senha em localhost definir user@password

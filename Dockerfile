@@ -1,5 +1,5 @@
 # Nodejs Image
-FROM node:16
+FROM node:20
 
 # workspace from docker
 WORKDIR /app

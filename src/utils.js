@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const assignEnvVarsToNode = () => {
-  const envPath = path.join(__dirname, ".env");
+  const envPath = path.join(__dirname, "../.env");
   const envFile = fs.readFileSync(envPath, "utf8");
 
   // Parse the contents into key-value pairs

@@ -5,8 +5,8 @@ const CategoriesCtrl = require("./controllers/CategoriesCtrl");
 const PostsCtrl = require("./controllers/PostsCtrl");
 const UsersCtrl = require("./controllers/UsersCtrl");
 
-const cacheMiddleware = require("./middlewares/CacheMiddleware");
-const cm = new cacheMiddleware();
+const CacheMiddleware = require("./middlewares/CacheMiddleware");
+const cm = new CacheMiddleware({ cache: {} });
 /** Endpoints **/
 
 /** Endpoints categories */

@@ -1,5 +1,10 @@
+const sharp = require('sharp');
+
 class CacheMiddleware {
-  cache = {};
+  constructor() {
+    this.cache = {};
+    this.cacheVerify = this.cacheVerify.bind(this);
+  }
 
   getFromCache(key) {
     return this.cache[key];
@@ -10,32 +15,42 @@ class CacheMiddleware {
     this.minifyImage(this.cache[key]);
   }
 
+  /**
+   * @param {import('express').Request} req
+   * @param {import('express').Response} res
+   * @param {import('express').NextFunction} next
+   */
   cacheVerify(req, res, next) {
-    const key = req.originalUrl;
-    const startTime = new Date();
+    try {
+      const key = req.originalUrl;
+      const startTime = new Date();
+      const cachedData = this.getFromCache(key);
 
-    const cachedData = this.getFromCache(key);
-
-    if (cachedData && !this.isCacheExpired(cachedData)) {
-      // Se os dados estiverem em cache e não expirarem, envie-os diretamente
-      const endTime = new Date();
-      this.logCacheHit(key, startTime, endTime);
-      res.send(cachedData.data);
-    } else {
-      // Se os dados não estiverem em cache ou expirarem, configure o novo comportamento do res.send
-      this.invalidateCache(key);
-      res.sendResponse = res.send;
-      res.send = (body) => {
-        const dataToCache = {
-          data: body,
-          timestamp: new Date().getTime(),
-        };
-        this.setInCache(key, dataToCache);
+      if (cachedData && !this.isCacheExpired(cachedData)) {
+        // Se os dados estiverem em cache e não expirarem, envie-os diretamente
         const endTime = new Date();
-        this.logCacheMiss(key, startTime, endTime);
-        res.sendResponse(body);
-      };
-      next();
+        this.logCacheHit(key, startTime, endTime);
+        res.send(cachedData.data);
+      } else {
+        // Se os dados não estiverem em cache ou expirarem, configure o novo comportamento do res.send
+        this.invalidateCache(key);
+        res.sendResponse = res.send;
+        res.send = (body) => {
+          const dataToCache = {
+            data: body,
+            timestamp: new Date().getTime(),
+          };
+          this.setInCache(key, dataToCache);
+          const endTime = new Date();
+          this.logCacheMiss(key, startTime, endTime);
+          res.sendResponse(body);
+        };
+        next();
+      }
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ msg: "Não foi possível armazenar o cache.", err: error });
     }
   }
 
@@ -44,7 +59,7 @@ class CacheMiddleware {
     const currentTime = new Date().getTime(); // milissegundos
     const cacheTime = cachedData.timestamp;
     // obter o TTL do arquivo env do projeto.
-    const ttl = 60 * 1000; // Exemplo: TTL de 1 minuto (em milissegundos) para fins de testes, podendo ser alterado numa aplicação real.
+    const ttl = process.env.CACHE_TTL * 1000;
     return currentTime - cacheTime > ttl;
   }
 
@@ -62,7 +77,7 @@ class CacheMiddleware {
 
   invalidateCache(key) {
     // Função para invalidar uma entrada específica do cache. Deve ser chamada após alguma persistência de dados no banco, passsando a rota como key.
-    delete cache[key];
+    delete this.cache[key];
   }
 
   minifyImage(res) {
