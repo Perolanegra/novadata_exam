@@ -12,7 +12,7 @@ class CacheMiddleware {
 
   setInCache(key, data) {
     this.cache[key] = data;
-    this.minifyImage(this.cache[key]);
+    // this.minifyImage(this.cache[key]);
   }
 
   /**

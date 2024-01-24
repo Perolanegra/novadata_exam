@@ -1,5 +1,6 @@
 const express = require("express");
 const routes = express.Router();
+const multer = require("multer");
 
 const CategoriesCtrl = require("./controllers/CategoriesCtrl");
 const PostsCtrl = require("./controllers/PostsCtrl");
@@ -7,10 +8,13 @@ const UsersCtrl = require("./controllers/UsersCtrl");
 
 const CacheMiddleware = require("./middlewares/CacheMiddleware");
 const cm = new CacheMiddleware({ cache: {} });
+
+const upload = multer({ dest: "imgs/" });
+
 /** Endpoints **/
 
 /** Endpoints categories */
-routes.post("/categories/store", CategoriesCtrl.store);
+routes.post("/categories/store", upload.single("image"), CategoriesCtrl.store);
 /** Fim categories */
 
 /** Endpoints posts */

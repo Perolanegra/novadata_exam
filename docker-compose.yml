@@ -17,3 +17,8 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1g

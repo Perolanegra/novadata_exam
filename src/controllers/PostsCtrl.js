@@ -3,10 +3,29 @@ const mongoose = require("mongoose");
 const Posts = mongoose.model("Posts");
 
 module.exports = {
+  /**
+   * @param {import('express').Request} req
+   * @param {import('express').Response} res
+   * @param {import('express').NextFunction} next
+   */
   async store(req, res) {
     // requisição que insere o post.
-    const postData = req.body;
+    // TODO: Analisar o porque a imagem está chegando undefined. 
+    console.log("ok: ", req.body)
+    const postData = {
+      title: req.body.title,
+      content: req.body.content,
+      author_id: req.body.author_id,
+      category_id: req.body.category_id,
+      created_at: req.body.created_at,
+      updated_at: req.body.updated_at,
+    };
+
     try {
+      // Processando a imagem
+      const imagePath = req.file.path;
+      postData.image = imagePath;
+
       const posts = await Posts.create(postData);
       return res.send(posts);
     } catch (e) {
