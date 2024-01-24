@@ -29,31 +29,39 @@ class CacheMiddleware {
       const isSameRoute = this.previousRoute ?? this.previousRoute === key;
       this.previousRoute = key;
 
-      if (cachedData && !this.isCacheExpired(cachedData) && isSameRoute) {
-        // Se os dados estiverem em cache e não expirarem, envie-os diretamente
-        const endTime = new Date();
+      if (cachedData) {
+        const hasData =
+          typeof cachedData.data === "object"
+            ? true
+            : JSON.parse(cachedData.data).length;
 
-        this.logCacheHit(key, startTime, endTime);
-        res.send(cachedData.data);
-      } else {
-        // Se os dados não estiverem em cache ou expirarem, configure o novo comportamento do res.send
-        this.invalidateCache(key);
-
-        res.sendResponse = res.send;
-        res.send = async (body) => {
-          req.file ? await this.minifyImage({ data: req.file }) : "";
-          const dataToCache = {
-            data: body,
-            timestamp: new Date().getTime(),
-          };
-          this.setInCache(key, dataToCache);
+        if (hasData && !this.isCacheExpired(cachedData) && isSameRoute) {
+          // Se os dados estiverem em cache e não expirarem, envie-os diretamente
           const endTime = new Date();
-          this.logCacheMiss(key, startTime, endTime);
-          res.sendResponse(body);
-        };
-        next();
+
+          this.logCacheHit(key, startTime, endTime);
+          res.send(cachedData.data);
+          return;
+        }
       }
+
+      // Se os dados não estiverem em cache ou expirarem, configure o novo comportamento do res.send
+      this.invalidateCache(key);
+      res.sendResponse = res.send;
+      res.send = async (body) => {
+        req.file ? await this.minifyImage({ data: req.file }) : "";
+        const dataToCache = {
+          data: body,
+          timestamp: new Date().getTime(),
+        };
+        this.setInCache(key, dataToCache);
+        const endTime = new Date();
+        this.logCacheMiss(key, startTime, endTime);
+        res.sendResponse(body);
+      };
+      next();
     } catch (error) {
+      console.log("error: ", error);
       return res
         .status(500)
         .send({ msg: "Não foi possível armazenar o cache.", err: error });

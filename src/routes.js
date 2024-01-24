@@ -17,14 +17,6 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
-
-
-// const session = require('express-session');
-// app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
-// app.use((req, res, next) => {
-//     req.session.previousRoute = req.path;
-//     next();
-//   });
 /** Endpoints **/
 
 /** Endpoints categories */
