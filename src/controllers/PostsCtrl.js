@@ -20,7 +20,6 @@ module.exports = {
   async getAll(req, res) {
     try {
       const postsArr = await Posts.find();
-      console.log('i don get here controller');
       return res.send(postsArr);
     } catch (e) {
       return res.status(500).send({
