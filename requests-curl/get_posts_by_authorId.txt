@@ -1,0 +1,1 @@
+curl -X GET "http://localhost:3000/api/posts/user?author_id=<ID_AUTHOR_AQUI>"
