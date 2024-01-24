@@ -6,14 +6,16 @@
   "scripts": {
     "test": "",
     "dev": "nodemon --watch src --ext js src/index.js",
-    "start": "docker-compose up -d --build",
-    "s:log": "docker-compose up --build"
+    "start": "concurrently \"npm run clean:app\"  \"docker-compose up -d --build\" ",
+    "clean:app": "concurrently \"sudo rm -rf data/\"  \"sudo rm -rf imgs/\" ",
+    "s:log": "concurrently \"npm run clean:app\"  \"docker-compose up --build\" "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.6.11",
