@@ -29,6 +29,7 @@ class CacheMiddleware {
       if (cachedData && !this.isCacheExpired(cachedData)) {
         // Se os dados estiverem em cache e não expirarem, envie-os diretamente
         const endTime = new Date();
+
         this.logCacheHit(key, startTime, endTime);
         res.send(cachedData.data);
       } else {

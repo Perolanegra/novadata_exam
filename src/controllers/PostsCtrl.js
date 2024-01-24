@@ -19,7 +19,11 @@ module.exports = {
 
   async getAll(req, res) {
     try {
-      const postsArr = await Posts.find();
+      const page = req.query.page ? parseInt(req.query.page) : 1;
+      const limit = req.query.limit ? parseInt(req.query.limit) : 2;
+      // Considera o limite e a página passada.
+      const skip = (page - 1) * limit;
+      const postsArr = await Posts.find().skip(skip).limit(limit);
       return res.send(postsArr);
     } catch (e) {
       return res.status(500).send({
@@ -30,9 +34,11 @@ module.exports = {
   },
 
   async getByCategoryId(req, res) {
-    const postData = req.body;
+    const idCategory = req.query.category_id;
     try {
-      const posts = await Posts.find({ category_id: { $in: postData.category_id } });
+      const posts = await Posts.find({
+        category_id: { $in: idCategory },
+      });
       return res.send(posts);
     } catch (error) {
       return res.status(500).send({
@@ -44,9 +50,11 @@ module.exports = {
   },
 
   async getByUserId(req, res) {
-    const postData = req.body;
+    const idAuthor = req.query.author_id;
     try {
-      const posts = await Posts.find({ author_id: { $in: postData.author_id } });
+      const posts = await Posts.find({
+        author_id: { $in: idAuthor },
+      });
       return res.send(posts);
     } catch (error) {
       return res.status(500).send({
