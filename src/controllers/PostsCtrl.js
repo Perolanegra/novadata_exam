@@ -20,11 +20,41 @@ module.exports = {
   async getAll(req, res) {
     try {
       const postsArr = await Posts.find();
+      console.log('i don get here controller');
       return res.send(postsArr);
     } catch (e) {
-      return res.status(400).send({
-        err: { message: "Não foi possível retornar as Postagens.", e },
+      return res.status(500).send({
+        friendly: "Não foi possível retornar as Postagens.",
+        err: { message: e.message, name: e.name },
       });
     }
-  }
+  },
+
+  async getByCategoryId(req, res) {
+    const postData = req.body;
+    try {
+      const posts = await Posts.find({ category_id: { $in: postData.category_id } });
+      return res.send(posts);
+    } catch (error) {
+      return res.status(500).send({
+        friendly:
+          "Não foi possível retornar as postagens referente a categoria passada.",
+        err: { message: e.message, name: e.name },
+      });
+    }
+  },
+
+  async getByUserId(req, res) {
+    const postData = req.body;
+    try {
+      const posts = await Posts.find({ author_id: { $in: postData.author_id } });
+      return res.send(posts);
+    } catch (error) {
+      return res.status(500).send({
+        friendly:
+          "Não foi possível retornar as postagens referente ao usuário.",
+        err: { message: e.message, name: e.name },
+      });
+    }
+  },
 };

@@ -10,18 +10,18 @@ const cm = new CacheMiddleware({ cache: {} });
 /** Endpoints **/
 
 /** Endpoints categories */
-routes.post("/categories/store", cm.cacheVerify, CategoriesCtrl.store);
+routes.post("/categories/store", CategoriesCtrl.store);
 /** Fim categories */
 
 /** Endpoints posts */
 routes.get("/posts", cm.cacheVerify, PostsCtrl.getAll);
-routes.post("/posts", cm.cacheVerify, PostsCtrl.store);
+routes.get("/posts/user", cm.cacheVerify, PostsCtrl.getByUserId);
+routes.get("/posts/category", cm.cacheVerify, PostsCtrl.getByCategoryId);
+routes.post("/posts", PostsCtrl.store);
 /** Fim posts */
 
 /** Endpoints Usuário */
-routes.get("/user", cm.cacheVerify, UsersCtrl.getAll);
-routes.get("/user/authenticate", cm.cacheVerify, UsersCtrl.getById);
-routes.post("/user/register", cm.cacheVerify, UsersCtrl.store);
+routes.post("/user", UsersCtrl.store);
 /** Fim Usuário */
 
 module.exports = routes;
