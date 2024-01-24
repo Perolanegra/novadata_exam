@@ -12,7 +12,7 @@ module.exports = {
     } catch (e) {
       return res.status(500).send({
         friendly: "Não foi possível adicionar a categoria.",
-        err: { message: e.message, name: e.name },
+        err: { message: e.message, name: e.name }
       });
     }
   },

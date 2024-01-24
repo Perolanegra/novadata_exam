@@ -6,7 +6,8 @@
   "scripts": {
     "test": "",
     "dev": "nodemon --watch src --ext js src/index.js",
-    "start": "docker-compose up --build"
+    "start": "docker-compose up -d --build",
+    "s:log": "docker-compose up --build"
   },
   "keywords": [],
   "author": "",

@@ -8,20 +8,34 @@ const UsersCtrl = require("./controllers/UsersCtrl");
 
 const CacheMiddleware = require("./middlewares/CacheMiddleware");
 const cm = new CacheMiddleware({ cache: {} });
+const pCtrl = new PostsCtrl();
 
-const upload = multer({ dest: "imgs/" });
+const storage = multer.diskStorage({
+  destination: "imgs/", // Specify the destination folder
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Use the original filename
+  },
+});
+const upload = multer({ storage: storage });
 
+
+// const session = require('express-session');
+// app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
+// app.use((req, res, next) => {
+//     req.session.previousRoute = req.path;
+//     next();
+//   });
 /** Endpoints **/
 
 /** Endpoints categories */
-routes.post("/categories/store", upload.single("image"), CategoriesCtrl.store);
+routes.post("/categories/store", CategoriesCtrl.store);
 /** Fim categories */
 
 /** Endpoints posts */
-routes.get("/posts", cm.cacheVerify, PostsCtrl.getAll);
-routes.get("/posts/user", cm.cacheVerify, PostsCtrl.getByUserId);
-routes.get("/posts/category", cm.cacheVerify, PostsCtrl.getByCategoryId);
-routes.post("/posts", PostsCtrl.store);
+routes.get("/posts", cm.cacheVerify, pCtrl.getAll);
+routes.get("/posts/user", cm.cacheVerify, pCtrl.getByUserId);
+routes.get("/posts/category", cm.cacheVerify, pCtrl.getByCategoryId);
+routes.post("/posts", upload.single("image"), pCtrl.store);
 /** Fim posts */
 
 /** Endpoints Usuário */

@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const Posts = mongoose.model("Posts");
 
-module.exports = {
+class PostsController {
+  constructor() {
+    this.store = this.store.bind(this);
+  }
+
   /**
    * @param {import('express').Request} req
    * @param {import('express').Response} res
@@ -10,8 +14,7 @@ module.exports = {
    */
   async store(req, res) {
     // requisição que insere o post.
-    // TODO: Analisar o porque a imagem está chegando undefined. 
-    console.log("ok: ", req.body)
+
     const postData = {
       title: req.body.title,
       content: req.body.content,
@@ -34,7 +37,7 @@ module.exports = {
         err: { message: e.message, name: e.name },
       });
     }
-  },
+  }
 
   async getAll(req, res) {
     try {
@@ -43,6 +46,7 @@ module.exports = {
       // Considera o limite e a página passada.
       const skip = (page - 1) * limit;
       const postsArr = await Posts.find().skip(skip).limit(limit);
+
       return res.send(postsArr);
     } catch (e) {
       return res.status(500).send({
@@ -50,7 +54,7 @@ module.exports = {
         err: { message: e.message, name: e.name },
       });
     }
-  },
+  }
 
   async getByCategoryId(req, res) {
     const idCategory = req.query.category_id;
@@ -66,7 +70,7 @@ module.exports = {
         err: { message: e.message, name: e.name },
       });
     }
-  },
+  }
 
   async getByUserId(req, res) {
     const idAuthor = req.query.author_id;
@@ -82,5 +86,7 @@ module.exports = {
         err: { message: e.message, name: e.name },
       });
     }
-  },
-};
+  }
+}
+
+module.exports = PostsController;

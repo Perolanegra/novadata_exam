@@ -1,8 +1,9 @@
-const sharp = require('sharp');
+const sharp = require("sharp");
 
 class CacheMiddleware {
   constructor() {
     this.cache = {};
+    this.previousRoute = undefined;
     this.cacheVerify = this.cacheVerify.bind(this);
   }
 
@@ -12,7 +13,6 @@ class CacheMiddleware {
 
   setInCache(key, data) {
     this.cache[key] = data;
-    // this.minifyImage(this.cache[key]);
   }
 
   /**
@@ -26,7 +26,10 @@ class CacheMiddleware {
       const startTime = new Date();
       const cachedData = this.getFromCache(key);
 
-      if (cachedData && !this.isCacheExpired(cachedData)) {
+      const isSameRoute = this.previousRoute ?? this.previousRoute === key;
+      this.previousRoute = key;
+
+      if (cachedData && !this.isCacheExpired(cachedData) && isSameRoute) {
         // Se os dados estiverem em cache e não expirarem, envie-os diretamente
         const endTime = new Date();
 
@@ -35,8 +38,10 @@ class CacheMiddleware {
       } else {
         // Se os dados não estiverem em cache ou expirarem, configure o novo comportamento do res.send
         this.invalidateCache(key);
+
         res.sendResponse = res.send;
-        res.send = (body) => {
+        res.send = async (body) => {
+          req.file ? await this.minifyImage({ data: req.file }) : "";
           const dataToCache = {
             data: body,
             timestamp: new Date().getTime(),
@@ -81,23 +86,27 @@ class CacheMiddleware {
     delete this.cache[key];
   }
 
-  minifyImage(res) {
+  async minifyImage(res) {
     // Check if the response data contains the image field
-    if (res.data.image) {
-      const imageBuffer = Buffer.from(res.data.image, "base64");
+    return new Promise((resolve, reject) => {
+      if (res.data.image) {
+        const imageBuffer = Buffer.from(res.data.image, "base64");
 
-      // Minify the image using sharp
-      sharp(imageBuffer)
-        .resize({ width: 300 }) // Adjust the width as needed
-        .toBuffer()
-        .then((minifiedImageBuffer) => {
-          // Update the response data with the minified image
-          res.data.image = minifiedImageBuffer.toString("base64");
-        })
-        .catch((err) => {
-          console.error("Error minifying image:", err);
-        });
-    }
+        // Minify the image using sharp
+        sharp(imageBuffer)
+          .resize({ width: 300 }) // Adjust the width as needed
+          .toBuffer()
+          .then((minifiedImageBuffer) => {
+            // Update the response data with the minified image
+            res.data.image = minifiedImageBuffer.toString("base64");
+            console.log("image minified: ", res.data.image);
+            resolve(true);
+          })
+          .catch((err) => {
+            console.error("Error minifying image:", err);
+          });
+      }
+    });
   }
 }
 
