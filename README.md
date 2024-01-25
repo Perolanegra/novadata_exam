@@ -9,8 +9,8 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 - (Windows) Para subir o servidor em modo de log (+ aconselhável) rode o seguinte comando no *CMD*: `npm run sw:log`.<br>
 - (Linux) Para subir o servidor em modo de log (+ aconselhável) rode o seguinte comando `npm run sl:log`.<br>
 - Para subir o servidor sem o docker (- aconselhável) rode o seguinte comando `npm run dev`.<br>
-- (Windows) Para subir o servidor em modo detached rode o seguinte comando `npm run start:windows`. Para matar as instancias dos containers navegue até a raiz e rode `docker-compose stop`<br>
-- (Linux) Para subir o servidor em modo detached rode o seguinte comando `npm run start:linux`. Para matar as instancias dos containers navegue até a raiz e rode `docker-compose stop`<br>
+- (Windows) Para subir o servidor em modo detached rode o seguinte comando `npm run start:windows`. Para matar as instancias dos containers navegue até a raiz e rode `docker compose stop`<br>
+- (Linux) Para subir o servidor em modo detached rode o seguinte comando `npm run start:linux`. Para matar as instancias dos containers navegue até a raiz e rode `docker compose stop`<br>
 - Para realizar as requests manualmente navegue até a pasta _requests-curl_, e execute em seu terminal após o server up. <br>
 - Verifique cada request para enviar os parâmetros de cada endpoint, a estrutura já está montada, só é necessário informar o valor do parâmetro. <br>
 - Para rodar as requests com o curl, certifique-se de tê-lo instalado, caso contrário pode utilizar qualquer outro (Postman), com os mesmos parâmetros, se atentando para a configuração de headers, queries & body. <br>
