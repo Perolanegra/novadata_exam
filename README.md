@@ -1,11 +1,8 @@
 # Novadata Exam
 
 O projeto foi gerado com o docker utilizando o docker compose para gerenciar os containers.<br/>
-Antes de rodar o servidor de desenvolvimento, baixar as dependencias do projeto.<br/>
 Certifique-se de estar usando pelo menos a versão 16 do Nodejs.<br/>
 Rode o seguinte comando para garantir a equivalência do lock json file ao baixar as libs: `npm ci` <br> <hr>
-
-<hr>
 
 ## Subindo e requisitando o Servidor
 
