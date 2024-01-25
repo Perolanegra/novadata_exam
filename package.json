@@ -9,7 +9,7 @@
     "start:linux": "npm run clean:linux && docker-compose up -d --build",
     "start:windows": "npm run clean:windows && docker-compose up -d --build",
     "clean:linux": "concurrently \"sudo rm -rf data/\"  \"sudo rm -rf imgs/\" ",
-    "clean:windows": "concurrently \" rmdir /s /q './data/' \"  \" rmdir /s /q './imgs/'\" ",
+    "clean:windows": "concurrently \" rd /s /q \".\\data\" \"  \" rmdir /s /q \".\\imgs\"\" ",
     "sl:log": "npm run clean:linux && docker-compose up --build",
     "sw:log": "npm run clean:windows && docker-compose up --build"
   },
