@@ -21,7 +21,7 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 - Foi utilizado o multer middleware para o processamento em persistir a imagem em uma pasta na aplicação. <br>
 - Foi utilizado o sharp para o processamento da imagem com relação a minificação. <br>
 - Foi utilizado o concurrently para garantir a execução de dois ou mais comandos para rodar os scripts do projeto. <br>
-- Foi implementada a classe CacheMiddleware para lógica da persistência temporária do dado em memória a fim de uma simples demo. Soluções alternativas para maior escalabilidade a depender da quantidade de dados usaria o Reddis por exemplo. <br>
+- Foi implementada a classe CacheMiddleware para lógica da persistência temporária do dado em memória a fim de uma simples demo. Soluções alternativas para maior escalabilidade a depender da quantidade de dados o Reddis poderia ser uma boa opção. <br>
 - Foi implementada uma classe Utils onde centraliza algumas lógicas que podem ser úteis a aplicação, como por exemplo assingar os valores das variaveis de ambiente ao objeto process do node. <br>
 - A lógica dos endpoints foram segregadas em cada controller respectivamente, centralizada em uma classe que pertence a respectiva entidade no mongoose. <br>
 - Foi implementada um routes file separado com suas devidas constraints para centralizar as rotas da aplicação. <br>
