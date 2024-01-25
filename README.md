@@ -13,7 +13,7 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 - (Linux) Para subir o servidor em modo detached rode o seguinte comando `npm run start:linux`. Para matar as instancias dos containers navegue até a raiz e rode `docker-compose stop`<br>
 - Para realizar as requests manualmente navegue até a pasta _requests-curl_, e execute em seu terminal após o server up. <br>
 
-**OBS: Se o servidor não conectou ao banco, provavelmente o ip local está diferente da assinatura do link simbólico, para checar, mesmo com o erro no terminal com a instância ativa, em outro terminal rode o seguinte comando para identificar o IP em que está a instância do mongodb: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <id>`, onde id seria o id da imagem podendo ser consultada através do `docker ps`. <br> Após checar o IP, substitua ele pela keyworw localhost, preservando a porta: `27017`, mate a instância e rode o server novamente**.
+**OBS: Se o servidor não conectou ao banco, provavelmente o ip local está diferente da assinatura do link simbólico, para checar, mesmo com o erro no terminal com a instância ativa, em outro terminal rode o seguinte comando para identificar o IP em que está a instância do mongodb: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <id>`, onde id seria o id da imagem podendo ser consultada através do `docker ps`. <br> Após checar o IP, substitua ele pela keyword localhost, preservando a porta: `27017`, mate a instância e rode o server novamente**.
 
 ## Tech Through
 
