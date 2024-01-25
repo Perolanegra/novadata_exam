@@ -11,12 +11,17 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 - Para subir o servidor sem o docker (- aconselhável) rode o seguinte comando `npm run dev`.<br>
 - (Windows) Para subir o servidor em modo detached rode o seguinte comando `npm run start:windows`. Para matar as instancias dos containers navegue até a raiz e rode `docker compose stop`<br>
 - (Linux) Para subir o servidor em modo detached rode o seguinte comando `npm run start:linux`. Para matar as instancias dos containers navegue até a raiz e rode `docker compose stop`<br>
-- Para realizar as requests manualmente navegue até a pasta _curl_, e execute em seu terminal após o server iniciado. <br>
-- Verifique cada request para enviar os parâmetros de cada endpoint, a estrutura já está montada, só é necessário informar o valor do parâmetro. (Caso não queira mudar os parâmetros, só é preciso se atentar as requests de get posts por Id do Author e posts por Id da categoria, será necessário informar os respectivos ID's, os dois podendo ser consultados após persistir uma categoria ou um usuário.) <br>
-- Para rodar as requests com o curl, certifique-se de tê-lo instalado, caso contrário pode utilizar qualquer outro (Postman), com os mesmos parâmetros, se atentando para a configuração de headers, queries & body. <br>
-- Para rodar automaticamente via terminal as requests, vá até o caminho raiz do projeto e abra o terminal, em sequência rode o seguinte comando: `npm run req curl/<SUA_REQUESTS_AQUI>`, podendo escolher qual irá rodar, por exemplo para obter os posts rode: `npm run req curl/get_posts.txt`
+
 
 **OBS: Se o servidor não conectou ao banco, provavelmente o ip local está diferente da assinatura do link simbólico, para checar, mesmo com o erro no terminal com a instância ativa, em outro terminal rode o seguinte comando para identificar o IP em que está rodando a instância do mongodb: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' id`, onde id seria o id da imagem podendo ser consultada através do `docker ps`. <br> Após checar o IP, substitua a keyword localhost pelo IP, preservando a porta: `27017` no arquivo .env do projeto, em sequência mate a instância utilizando o `CTRL+C` e rode o server novamente**.
+
+## Testando os Endpoints com o CURL
+
+- Certifique-se de ter o curl instalado em sua máquina. <br>
+- Para realizar as requests manualmente navegue até a pasta _curl_, e execute em seu terminal após o server iniciado. <br>
+- Verifique cada request para enviar os parâmetros de cada endpoint, a estrutura já está montada, só é necessário informar o valor do parâmetro. (Caso não queira mudar os parâmetros, só é preciso se atentar as requests de get posts por Id do Author e posts por Id da categoria, será necessário informar os respectivos ID's, os dois podendo ser consultados após persistir uma categoria ou um usuário.) <br>
+- Para rodar de forma automaizada via shell/bash as requests, vá até o caminho raiz do projeto e abra o terminal, em sequência rode o seguinte comando: `npm run req curl/<SUA_REQUEST_AQUI>`, podendo escolher qual irá rodar, por exemplo para obter os posts rode: `npm run req curl/get_posts.txt` <br>
+- Para rodar as requests fora do curl, pode utilizar qualquer outro (Postman), com os mesmos parâmetros, se atentando para a configuração de headers, queries & body. <br>
 
 ## Tech Through
 
