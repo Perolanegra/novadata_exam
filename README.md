@@ -1,14 +1,16 @@
 # Novadata Exam
 
 O projeto foi gerado com o docker utilizando o docker compose para gerenciar os containers.<br/>
-Certifique-se de estar usando pelo menos a versão 16 do Nodejs.<br/>
+Certifique-se de ter o docker instalado e estar usando pelo menos a versão 18 do Nodejs.<br/>
 Rode o seguinte comando para garantir a equivalência do lock json file ao baixar as libs: `npm ci` <br> <hr>
 
 ## Subindo e requisitando o Servidor
 
-- Para subir o servidor em modo de log (+ aconselhável) rode o seguinte comando `npm run s:log`.<br>
+- (Windows) Para subir o servidor em modo de log (+ aconselhável) rode o seguinte comando `npm run sw:log`.<br>
+- (Linux) Para subir o servidor em modo de log (+ aconselhável) rode o seguinte comando `npm run sl:log`.<br>
 - Para subir o servidor sem o docker (- aconselhável) rode o seguinte comando `npm run dev`.<br>
-- Para subir o servidor em modo detached rode o seguinte comando `npm run start`. Para matar as instancias dos containers navegue até a raiz e rode `docker-compose stop`<br>
+- (Windows) Para subir o servidor em modo detached rode o seguinte comando `npm run start:windows`. Para matar as instancias dos containers navegue até a raiz e rode `docker-compose stop`<br>
+- (Linux) Para subir o servidor em modo detached rode o seguinte comando `npm run start:linux`. Para matar as instancias dos containers navegue até a raiz e rode `docker-compose stop`<br>
 - Para realizar as requests manualmente navegue até a pasta _requests-curl_, e execute em seu terminal após o server up. <br>
 
 *OBS: Se o servidor não conectou ao banco, provavelmente o ip local está diferente da assinatura do link simbólico, para checar, mesmo com o erro no terminal com a instância ativa, em outro terminal rode o seguinte comando para identificar o IP em que está a instância do mongodb: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <id>`, onde id seria o id da imagem podendo ser consultada através do `docker ps`. <br> Após checar o IP, substitua ele pela keyworw localhost, preservando a porta: `27017`, mate a instância e rode o server novamente*.
