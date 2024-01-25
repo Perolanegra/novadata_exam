@@ -19,8 +19,8 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 
 - Certifique-se de ter o curl instalado em sua máquina. <br>
 - Para realizar as requests manualmente navegue até a pasta _curl_, e execute em seu terminal após o server iniciado. <br>
-- Verifique cada request para enviar os parâmetros de cada endpoint, a estrutura já está montada, só é necessário informar o valor do parâmetro. (Caso não queira mudar os parâmetros, só é preciso se atentar as requests de get posts por Id do Author e posts por Id da categoria, será necessário informar os respectivos ID's, os dois podendo ser consultados após persistir uma categoria ou um usuário.) <br>
-- Para rodar de forma automaizada via shell/bash as requests, vá até o caminho raiz do projeto e abra o terminal, em sequência rode o seguinte comando: `npm run req curl/<SUA_REQUEST_AQUI>`, podendo escolher qual irá rodar, por exemplo para obter os posts rode: `npm run req curl/get_posts.txt` <br>
+- Verifique cada request para enviar os parâmetros de cada endpoint, a estrutura já está montada, só é necessário informar o valor do parâmetro. (Caso não queira mudar os parâmetros, só é preciso se atentar as requests de *get_posts_by_authorId* e *get_posts_by_categoryId*, pois será necessário informar os respectivos ID's, os dois podendo ser consultados após persistir uma categoria ou um usuário-author) <br>
+- Para rodar de forma automatizada via shell/bash as requests, vá até o caminho raiz do projeto e abra o terminal, em sequência rode o seguinte comando: `npm run req curl/<SUA_REQUEST_AQUI>`, podendo escolher qual irá rodar, por exemplo para obter os posts rode: `npm run req curl/get_posts.txt` <br>
 - Para rodar as requests fora do curl, pode utilizar qualquer outro (Postman), com os mesmos parâmetros, se atentando para a configuração de headers, queries & body. <br>
 
 ## Tech Through
