@@ -40,4 +40,4 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 
 ## Testes Unitários
 
-Nenhum teste foi implementado.
+Nenhum teste unitário foi implementado.
