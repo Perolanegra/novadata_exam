@@ -36,8 +36,8 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 
 ## Demo
 
-- Vai ser implementado aqui uma demo de como rodar as requisições pelo curl e os valores da resposta da api em GIF.
+<img src="src/assets/demo_curl_requests.gif" alt="Demo" width="750">
 
 ## Testes Unitários
 
-Nenhum teste foi implementado ainda.
+Nenhum teste foi implementado.
