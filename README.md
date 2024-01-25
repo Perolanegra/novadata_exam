@@ -15,7 +15,7 @@ Rode o seguinte comando para garantir a equivalência do lock json file ao baixa
 - Verifique cada request para enviar os parâmetros de cada endpoint, a estrutura já está montada, só é necessário informar o valor do parâmetro. <br>
 - Para rodar as requests com o curl, certifique-se de tê-lo instalado, caso contrário pode utilizar qualquer outro (Postman), com os mesmos parâmetros, se atentando para a configuração de headers, queries & body. <br>
 
-**OBS: Se o servidor não conectou ao banco, provavelmente o ip local está diferente da assinatura do link simbólico, para checar, mesmo com o erro no terminal com a instância ativa, em outro terminal rode o seguinte comando para identificar o IP em que está a instância do mongodb: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <id>`, onde id seria o id da imagem podendo ser consultada através do `docker ps`. <br> Após checar o IP, substitua ele pela keyword localhost, preservando a porta: `27017` no arquivo .env do projeto, em sequência mate a instância e rode o server novamente**.
+**OBS: Se o servidor não conectou ao banco, provavelmente o ip local está diferente da assinatura do link simbólico, para checar, mesmo com o erro no terminal com a instância ativa, em outro terminal rode o seguinte comando para identificar o IP em que está a instância do mongodb: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <id>`, onde id seria o id da imagem podendo ser consultada através do `docker ps`. <br> Após checar o IP, substitua a keyword localhost pelo IP, preservando a porta: `27017` no arquivo .env do projeto, em sequência mate a instância e rode o server novamente**.
 
 ## Tech Through
 
